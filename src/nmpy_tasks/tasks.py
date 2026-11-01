@@ -447,7 +447,18 @@ def task35():
 @task("Extract the integer part of a random array of positive numbers using 4 different methods (★★☆)")
 @task_skipper(skip=False)
 def task36():
-    pass
+    n = np.random.uniform(0, 10, 10) 
+    n1 = n.astype(np.int32)
+    n2 = np.floor(n) 
+    n3 = np.trunc(n) 
+    n4 = n - (n%1)
+    print(n)
+    print("casting: ",n1)
+    print("floor:",n2) 
+    print("trunc:",n3) 
+    print("modulo:",n4)
+
+    
 
 
 @task("Create a 5x5 matrix with row values ranging from 0 to 4 (★★☆)")
