@@ -113,7 +113,8 @@ def task13():
 @task("Create a random vector of size 30 and find the mean value (★☆☆)")
 @task_skipper(skip=False)
 def task14():
-    pass
+    a = np.arange(20,20+30)
+    print(np.mean(a))
 
 
 @task("Create a 2d array with 1 on the border and 0 inside (★☆☆)")
