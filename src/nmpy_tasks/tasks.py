@@ -39,27 +39,33 @@ def task4():
 
 
 @task("How to get the documentation of the numpy add function from the command line? (★☆☆)")
-@task_skipper(skip=False)
+@task_skipper(skip=True)
 def task5():
-    pass
+    np.info(np.add)
 
 
 @task("Create a null vector of size 10 but the fifth value which is 1 (★☆☆)")
-@task_skipper(skip=False)
+@task_skipper(skip=True)
 def task6():
-    pass
+    a = np.full(10, np.nan) 
+    a[4] = 1 
+    print(a) 
 
 
 @task("Create a vector with values ranging from 10 to 49 (★☆☆)")
-@task_skipper(skip=False)
+@task_skipper(skip=True)
 def task7():
-    pass
+    a = np.arange(10, 50)
+    print(a)
 
 
 @task("Reverse a vector (first element becomes last) (★☆☆)")
 @task_skipper(skip=False)
 def task8():
-    pass
+    a = np.arange(10)
+    print(a) 
+    a = np.flip(a)
+    print(a) 
 
 
 @task("Create a 3x3 matrix with values ranging from 0 to 8 (★☆☆)")
