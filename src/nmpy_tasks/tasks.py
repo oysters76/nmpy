@@ -413,8 +413,13 @@ def task32():
 @task("How to get the dates of yesterday, today and tomorrow? (★☆☆)")
 @task_skipper(skip=False)
 def task33():
-    pass
-
+    one_day = np.timedelta64(1, 'D')
+    today = np.datetime64('today','D') 
+    tomorrow = today + one_day
+    yesterday = today - one_day
+    print("yesterday:", yesterday)
+    print("today:", today)
+    print("tomorrow:", tomorrow)
 
 @task("How to get all the dates corresponding to the month of July 2016? (★★☆)")
 @task_skipper(skip=False)
