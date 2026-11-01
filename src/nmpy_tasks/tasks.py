@@ -424,14 +424,24 @@ def task33():
 @task("How to get all the dates corresponding to the month of July 2016? (★★☆)")
 @task_skipper(skip=False)
 def task34():
-    daterange = np.arange('2016-07-01', '2016-08', dtype='datetime64[D]')
-    print(daterange) 
-
+    daterange1 = np.arange('2016-07-01', '2016-08', dtype='datetime64[D]')
+    daterange2 = np.arange('2016-07-01', '2016-08-01', dtype='datetime64[D]') 
+    print(daterange1) 
+    print(daterange2)
+    assert np.array_equal(daterange1, daterange2), "Date ranges should have the same length"
 
 @task("How to compute ((A+B)*(-A/2)) in place (without copy)? (★★☆)")
 @task_skipper(skip=False)
 def task35():
-    pass
+    A = np.ones(3) * 2 
+    B = np.ones(3) * 3 
+
+    np.add(A, B, out=B) 
+    np.negative(A, out=A) 
+    np.divide(A, 2, out=A) 
+    np.multiply(A,B, out=B) 
+
+    print(B) 
 
 
 @task("Extract the integer part of a random array of positive numbers using 4 different methods (★★☆)")
