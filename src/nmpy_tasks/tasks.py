@@ -86,7 +86,7 @@ def task10():
 @task("Create a 3x3 identity matrix (★☆☆)")
 @task_skipper(skip=False)
 def task11():
-    pass
+    print(np.identity(3))
 
 
 @task("Create a 3x3x3 array with random values (★☆☆)")
