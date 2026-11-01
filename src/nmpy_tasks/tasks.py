@@ -379,7 +379,18 @@ def task30():
 @task("How to ignore all numpy warnings (not recommended)? (★☆☆)")
 @task_skipper(skip=False)
 def task31():
-    pass
+    """
+    key learnings:
+    - np.errstate: context manager, suppresses warnings only inside the block (best option)
+      options: 'ignore', 'warn', 'raise', 'call', 'print', 'log'
+      categories: divide, over, under, invalid
+    - warnings.filterwarnings('ignore'): suppresses ALL python warnings globally (nuclear option)
+    - np.seterr(all='ignore'): suppresses all numpy warnings globally until changed back
+    - always prefer np.errstate because it's scoped — warnings come back after the block
+    """
+    with np.errstate(divide='ignore', invalid='ignore'):
+        result = np.array([1,0,-1]) / 0 # no warnings 
+        print(result)
 
 
 @task("Is the following expressions true? (★☆☆)")
