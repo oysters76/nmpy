@@ -131,7 +131,9 @@ def task15():
 @task("How to add a border (filled with 0's) around an existing array? (★☆☆)")
 @task_skipper(skip=False)
 def task16():
-    pass
+    A = np.zeros((2, 2)) 
+    A = np.pad(A, 1, constant_values=69)
+    print(A)
 
 
 @task("What is the result of the following expression? (★☆☆)")
