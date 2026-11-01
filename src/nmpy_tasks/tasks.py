@@ -244,7 +244,16 @@ def task22():
 @task("Create a custom dtype that describes a color as four unsigned bytes (RGBA) (★☆☆)")
 @task_skipper(skip=False)
 def task23():
-    pass
+    my_color = np.dtype([
+        ('r', np.ubyte),
+        ('g', np.ubyte),
+        ('b', np.ubyte),
+        ('a', np.ubyte)
+    ]) 
+
+    colors = np.array([(255, 0, 0, 255), (69, 255, 0, 255), (0, 0, 255, 255)], dtype=my_color)
+    print(colors)
+    print(colors['r'])  # Access the red channel
 
 
 @task("Multiply a 5x3 matrix by a 3x2 matrix (real matrix product) (★☆☆)")
