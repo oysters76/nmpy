@@ -556,7 +556,24 @@ def task41():
 @task("Consider two random arrays A and B, check if they are equal (★★☆)")
 @task_skipper(skip=False)
 def task42():
-    pass
+    """
+    key learnings:
+    - np.array_equal(a, b): exact match, returns single True/False
+    - np.allclose(a, b): equal within tolerance, use for float comparison
+      rtol = relative tolerance, atol = absolute tolerance
+    - (a == b).all(): element-wise compare then check if all True
+    - for floats always use allclose, never == (floating point precision issues)
+    """
+    a = np.arange(5,10) 
+    b = np.arange(5,10)
+
+    print("Are A and B equal? ", np.array_equal(a, b))
+
+    c = np.random.rand(5) 
+    d = np.random.rand(5) 
+
+    t = np.allclose(c,d, rtol=0.01)
+    print("Are c and d close",t)
 
 
 @task("Make an array immutable (read-only) (★★☆)")
