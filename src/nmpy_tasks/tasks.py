@@ -490,7 +490,22 @@ def task38():
 @task("Create a vector of size 10 with values ranging from 0 to 1, both excluded (★★☆)")
 @task_skipper(skip=False)
 def task39():
-    pass
+    """
+    key learnings:
+    - np.linspace(start, stop, num) generates num evenly spaced values
+    - endpoint=True (default): includes stop, divides range into num-1 equal parts
+    - endpoint=False: excludes stop, divides range into num equal parts (tighter spacing)
+    - x and y give different values because the spacing changes with endpoint
+    - slicing [1:-1] or [1:] is a quick way to exclude endpoints after generation
+    """
+    n = np.linspace(0, 1, 12) 
+    n = n[1:-1]
+    print(n, n.shape)
+    x = np.linspace(0, 1, 11, endpoint=False)[1:]
+    y = np.linspace(0, 1, 11, endpoint=True)[1:-1] 
+
+    print(x)
+    print(y) 
 
 
 @task("Create a random vector of size 10 and sort it (★★☆)")
