@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-
+import timeit
 from nmpy_tasks.decorators import task_skipper, task
 
 
@@ -519,9 +519,40 @@ def task40():
 @task("How to sum a small array faster than np.sum? (★★☆)")
 @task_skipper(skip=False)
 def task41():
-    pass
+    """
+    einsum cheatsheet:
+    - letters represent axes. repeated letters mean "multiply along that axis"
+    - arrow (->) separates input from output. missing letter = sum over it
 
+    1D:
+      'i->'       sum all elements          np.sum(a)
+      'i->i'      keep as is (identity)     a
 
+    2D:
+      'ij->'      sum entire matrix         np.sum(A)
+      'ij->i'     sum each row              np.sum(A, axis=1)
+      'ij->j'     sum each column           np.sum(A, axis=0)
+      'ii->'      trace (sum of diagonal)   np.trace(A)
+      'ij->ji'    transpose                 A.T
+
+    two arrays:
+      'i,i->'     dot product               np.dot(a, b)
+      'i,j->ij'   outer product             np.outer(a, b)
+      'ij,jk->ik' matrix multiply           A @ B
+      'ij,ij->'   element-wise * then sum   np.sum(A * B)
+
+    rule: if a letter appears in inputs but not after ->, it gets summed over
+    """
+    b = np.arange(1,200)
+    t1 = timeit.timeit(lambda: np.add.reduce(b), number=1000)
+    t2 = timeit.timeit(lambda: np.sum(b), number=1000)
+    t3 = timeit.timeit(lambda: sum(b), number=1000)
+    t4 = timeit.timeit(lambda: np.einsum('i->', b), number=1000)
+    print(f"{t1:.4f} seconds for np.add.reduce")
+    print(f"{t2:.4f} seconds for np.sum")
+    print(f"{t3:.4f} seconds for built-in sum")
+    print(f"{t4:.4f} seconds for np.einsum")
+ 
 @task("Consider two random arrays A and B, check if they are equal (★★☆)")
 @task_skipper(skip=False)
 def task42():
