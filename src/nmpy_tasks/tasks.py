@@ -120,7 +120,12 @@ def task14():
 @task("Create a 2d array with 1 on the border and 0 inside (★☆☆)")
 @task_skipper(skip=False)
 def task15():
-    pass
+    a = np.zeros((5,5)) 
+    a[0, 0:5] = 1
+    a[4, 0:5] = 1
+    a[0:5, 0] = 1
+    a[0:5, 4] = 1
+    print(a)
 
 
 @task("How to add a border (filled with 0's) around an existing array? (★☆☆)")
