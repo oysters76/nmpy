@@ -102,8 +102,13 @@ def task12():
 @task("Create a 10x10 array with random values and find the minimum and maximum values (★☆☆)")
 @task_skipper(skip=False)
 def task13():
-    pass
-
+    import secrets 
+    key = secrets.randbits(128) 
+    rng = np.random.default_rng(key) 
+    A = np.matrix(rng.random((10, 10)) * 100)
+    print(A) 
+    print(np.max(A)) 
+    print(np.min(A))
 
 @task("Create a random vector of size 30 and find the mean value (★☆☆)")
 @task_skipper(skip=False)
