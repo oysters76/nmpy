@@ -147,6 +147,18 @@ np.inf > np.nan
 np.nan - np.nan
 np.nan in set([np.nan])
 0.3 == 3 * 0.1
+
+key learnings:
+Two core lessons:
+
+1. **NaN is toxic and never equal to anything, including itself.
+** Any arithmetic with `nan` produces `nan`, and any comparison returns `False`.
+ That's why `nan == nan` is `False` and `inf > nan` is `False`. The one exception:
+   Python's `set`/`in` uses identity (`is`) before equality, and since `np.nan` is a singleton, 
+   `nan in set([nan])` is `True`.
+
+2. **Floating point can't represent 0.1 exactly.** `3 * 0.1` is `0.30000000000000004`, not `0.3`. 
+Use `np.isclose()` or `math.isclose()` instead of `==` for float comparison.
 ```
     """
     exprs = [
