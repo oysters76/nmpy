@@ -176,7 +176,14 @@ Use `np.isclose()` or `math.isclose()` instead of `==` for float comparison.
 @task("Create a 5x5 matrix with values 1,2,3,4 just below the diagonal (★☆☆)")
 @task_skipper(skip=False)
 def task18():
-    pass
+    A = np.identity(5) 
+    print(A)
+    A_flat = np.diagflat([1,2,3,4],-1) 
+    A_new = A + A_flat
+    print(A_new)
+
+    answer = np.diag([1,2,3,4], k=-1)
+    print(answer)
 
 
 @task("Create a 8x8 matrix and fill it with a checkerboard pattern (★☆☆)")
