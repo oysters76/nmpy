@@ -189,7 +189,10 @@ def task18():
 @task("Create a 8x8 matrix and fill it with a checkerboard pattern (★☆☆)")
 @task_skipper(skip=False)
 def task19():
-    pass
+    checkboard = np.zeros((8,8), dtype=int)
+    checkboard[0:8:2, 0:8:2] = 1  # start at 0, till 8, step by 2 for both row,col
+    checkboard[1:8:2, 1:8:2] = 1 # start at 1 (odd), till 8, step by 2 (odds) for both row,col
+    print(checkboard)
 
 
 @task("Consider a (6,7,8) shape array, what is the index (x,y,z) of the 100th element? (★☆☆)")
