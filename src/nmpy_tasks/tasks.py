@@ -272,8 +272,13 @@ def task24():
 @task("Given a 1D array, negate all elements which are between 3 and 8, in place (★☆☆)")
 @task_skipper(skip=False)
 def task25():
-    pass
-
+    n = np.arange(2,18)
+    # if n is between 3 and 8, true: negate, else n but where create a new array
+    where_n = np.where((n >= 3) & (n <= 8), -n, n)
+    # so use inplace index way 
+    n[(n >= 3) & (n <= 8)] *= -1
+    print(n)
+    assert np.array_equal(n,where_n), "In-place negation did not match expected result" 
 
 @task("What is the output of the following script? (★☆☆)")
 @task_skipper(skip=False)
