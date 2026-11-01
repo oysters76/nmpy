@@ -353,8 +353,16 @@ def task28():
 @task("How to round away from zero a float array? (★☆☆)")
 @task_skipper(skip=False)
 def task29():
-    pass
+    f = np.random.rand(5) * 10 - 5  # random floats in [-5,5)
+    f_dash = np.where(np.sign(f) == 1, np.ceil(f), np.floor(f))
+    print(f"Original array: {f}")
+    print(f"Rounded away from zero: {f_dash}")
 
+    # copysign approach: abs removes sign, ceil rounds up, copysign puts the sign back
+    # np.sign(0) returns 0 not 1, but floor(0)==ceil(0)==0 so it doesn't matter
+    f_ = np.copysign(np.ceil(np.abs(f)), f)
+
+    assert np.array_equal(f_dash, f_), "Both rounding methods should produce the same result"
 
 @task("How to find common values between two arrays? (★☆☆)")
 @task_skipper(skip=False)
