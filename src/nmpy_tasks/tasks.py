@@ -198,7 +198,13 @@ def task19():
 @task("Consider a (6,7,8) shape array, what is the index (x,y,z) of the 100th element? (★☆☆)")
 @task_skipper(skip=False)
 def task20():
-    pass
+    a = np.arange(6*7*8).reshape((6,7,8))
+    r = a.ravel() 
+    print(r[99])
+    print(np.unravel_index(99, a.shape))
+    ind = np.unravel_index(99, a.shape)
+    print(f"Index of the 100th element: {ind}")
+    print(f"Value at that index: {a[ind]}")
 
 
 @task("Create a checkerboard 8x8 matrix using the tile function (★☆☆)")
