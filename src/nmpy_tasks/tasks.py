@@ -472,7 +472,19 @@ def task37():
 @task("Consider a generator function that generates 10 integers and use it to build an array (★☆☆)")
 @task_skipper(skip=False)
 def task38():
-    pass
+    """
+    key learnings:
+    - yield makes a function a generator — it produces values one at a time, not all at once
+    - np.fromiter consumes a generator directly into an array without building a list in memory
+    - np.array(list(gen())) works but loads everything into a list first — bad for large data
+    - count= tells fromiter how many elements to expect, so it can pre-allocate the array
+    - dtype is required for fromiter — it needs to know the type upfront
+    """
+    def gen(x=10):
+        for i in range(x):
+            yield i
+    n = np.fromiter(gen(), dtype=int, count=10)
+    print(n)
 
 
 @task("Create a vector of size 10 with values ranging from 0 to 1, both excluded (★★☆)")
