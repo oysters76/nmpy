@@ -283,8 +283,26 @@ def task25():
 @task("What is the output of the following script? (★☆☆)")
 @task_skipper(skip=False)
 def task26():
-    pass
+    """
+    print(sum(range(5),-1))
+    from numpy import *
+    print(sum(range(5),-1))
 
+    prints 9 
+    prints 10
+
+    key learnings:
+    - Built-in sum(iterable, start): the 2nd arg is the start value → -1 + 10 = 9
+    - np.sum(a, axis): the 2nd arg is the axis; axis=-1 = last axis → 10
+    - `from numpy import *` silently shadows Python built-ins
+      (sum, min, max, abs, round, all, any, ...) and changes their behaviour.
+    - Avoid wildcard imports: use `import numpy as np` and call np.sum explicitly.
+    """
+    sn = sum(range(5), -1) # Python built-in sum: start=-1 → 0+1+2+3+4-1 = 9 
+    nn = np.sum(np.arange(5), -1) # NumPy sum: axis=-1 → sum over last axis of 1D array → 0+1+2+3+4 = 10
+    print(f"Python built-in sum(range(5), -1) = {sn}")
+    print(f"NumPy sum(range(5), -1) = {nn}")
+    
 
 @task("Consider an integer vector Z, which of these expressions are legal? (★☆☆)")
 @task_skipper(skip=False)
