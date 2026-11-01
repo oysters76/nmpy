@@ -259,8 +259,15 @@ def task23():
 @task("Multiply a 5x3 matrix by a 3x2 matrix (real matrix product) (★☆☆)")
 @task_skipper(skip=False)
 def task24():
-    pass
+    A = np.ones((5,3)) 
+    M = -1 * np.ones((3,2))
 
+    print(A,"\n", M)
+    product = np.matmul(A, M)
+    print(product)
+
+    product_shorthand = A @ M 
+    assert np.array_equal(product, product_shorthand)  # Should be True
 
 @task("Given a 1D array, negate all elements which are between 3 and 8, in place (★☆☆)")
 @task_skipper(skip=False)
