@@ -367,7 +367,13 @@ def task29():
 @task("How to find common values between two arrays? (★☆☆)")
 @task_skipper(skip=False)
 def task30():
-    pass
+    f1 = np.arange(5,10) 
+    f2 = np.arange(8,12) 
+
+    f1f2, f1_inds, f2_inds = np.intersect1d(f1, f2, return_indices=True)
+    print(f1f2)
+    print(f1_inds)
+    print(f2_inds)
 
 
 @task("How to ignore all numpy warnings (not recommended)? (★☆☆)")
