@@ -210,7 +210,15 @@ def task20():
 @task("Create a checkerboard 8x8 matrix using the tile function (★☆☆)")
 @task_skipper(skip=False)
 def task21():
-    pass
+    even = np.tile(np.array([1,0]), (1,4)) 
+    odd = np.tile(np.array([0,1]), (1,4))
+    segment = np.vstack((even, odd))
+    checkboard = np.tile(segment, (4,1))
+    print(checkboard)
+
+    # simple one 
+    ck = np.tile(np.identity(2), (4,4))
+    assert np.array_equal(checkboard, ck), "Checkerboard matrices do not match!"
 
 
 @task("Normalize a 5x5 random matrix (★☆☆)")
