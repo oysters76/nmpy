@@ -302,18 +302,52 @@ def task26():
     nn = np.sum(np.arange(5), -1) # NumPy sum: axis=-1 → sum over last axis of 1D array → 0+1+2+3+4 = 10
     print(f"Python built-in sum(range(5), -1) = {sn}")
     print(f"NumPy sum(range(5), -1) = {nn}")
-    
+
 
 @task("Consider an integer vector Z, which of these expressions are legal? (★☆☆)")
 @task_skipper(skip=False)
 def task27():
-    pass
+    """
+    key learnings:
+    - Z**Z: each element to the power of itself (5^5, 6^6, etc.)
+    - 2 << Z >> 2: bitwise shift left then right, works on int arrays
+    - Z <- Z: python reads this as Z < (-Z), not assignment! all False
+    - 1j*Z: complex numbers, 1j is python's imaginary literal
+    - Z/1/1: dividing by 1 twice, just converts int to float
+    - Z<Z>Z: illegal, python can't chain < > with numpy arrays
+    - takeaway: numpy overloads almost every python operator to work element-wise
+    """
+    Z = np.arange(5,10) 
+    exprs = [
+        ("Z**Z", Z**Z),
+        ("2 << Z >> 2", 2 << Z >> 2), 
+        ("Z <- Z", Z <- Z),
+        ("1j*Z", 1j*Z),
+        ("Z/1/1", Z/1/1),
+        ("Z<Z>Z", "Illegal syntax"),
+    ]
+    for label, result in exprs:
+        print(f"{label:<40} {result}")
 
 
 @task("What are the result of the following expressions? (★☆☆)")
 @task_skipper(skip=False)
 def task28():
-    pass
+    """
+    key learnings:
+    - 0/0 gives nan (not an error), numpy warns but doesn't crash
+    - 0//0 (floor division) gives 0, also warns
+    - nan cast to int gives an undefined garbage value, casting back to float keeps that garbage
+    - takeaway: numpy silently handles bad math with nan/0 instead of raising exceptions,
+      so you have to check for these yourself
+    """
+    exprs = [
+        ("np.array(0) / np.array(0)", np.array(0) / np.array(0)),
+        ("np.array(0) // np.array(0)", np.array(0) // np.array(0)),
+        ("np.array([np.nan]).astype(int).astype(float)", np.array([np.nan]).astype(int).astype(float)),
+    ]
+    for label, result in exprs:
+        print(f"{label:<40} {result}")
 
 
 @task("How to round away from zero a float array? (★☆☆)")
