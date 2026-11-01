@@ -13,7 +13,9 @@ uv sync
 ## Run
 
 ```bash
-uv run tasks
+uv run tasks          # run all tasks
+uv run tasks 33       # run only task 33
+uv run tasks 5 6 7    # run multiple tasks
 ```
 
 ## Structure
