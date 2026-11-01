@@ -424,7 +424,8 @@ def task33():
 @task("How to get all the dates corresponding to the month of July 2016? (★★☆)")
 @task_skipper(skip=False)
 def task34():
-    pass
+    daterange = np.arange('2016-07-01', '2016-08', dtype='datetime64[D]')
+    print(daterange) 
 
 
 @task("How to compute ((A+B)*(-A/2)) in place (without copy)? (★★☆)")
