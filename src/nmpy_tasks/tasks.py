@@ -139,7 +139,26 @@ def task16():
 @task("What is the result of the following expression? (★☆☆)")
 @task_skipper(skip=False)
 def task17():
-    pass
+    """
+        ```python
+0 * np.nan
+np.nan == np.nan
+np.inf > np.nan
+np.nan - np.nan
+np.nan in set([np.nan])
+0.3 == 3 * 0.1
+```
+    """
+    exprs = [
+        ("0 * np.nan",             0 * np.nan),
+        ("np.nan == np.nan",       np.nan == np.nan),
+        ("np.inf > np.nan",        np.inf > np.nan),
+        ("np.nan - np.nan",        np.nan - np.nan),
+        ("np.nan in set([np.nan])", np.nan in set([np.nan])),
+        ("0.3 == 3 * 0.1",        0.3 == 3 * 0.1),
+    ]
+    for label, result in exprs:
+        print(f"{label:<30} {result}")
 
 
 @task("Create a 5x5 matrix with values 1,2,3,4 just below the diagonal (★☆☆)")
