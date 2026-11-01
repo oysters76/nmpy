@@ -396,7 +396,18 @@ def task31():
 @task("Is the following expressions true? (★☆☆)")
 @task_skipper(skip=False)
 def task32():
-    pass
+    """
+    key learnings:
+    - np.sqrt(-1) returns nan and a warning — it only works with real numbers
+    - np.emath.sqrt(-1) returns 1j (complex) — it handles negative inputs properly
+    - so np.sqrt(-1) == np.emath.sqrt(-1) is False (nan != 1j)
+    - the assert passes because nan != anything is always True (even nan != nan)
+    - use np.emath (extended math) when you need complex results from sqrt, log, power
+    """
+    sq1 = np.sqrt(-1)
+    sq2 = np.emath.sqrt(-1)
+    print(sq1,sq2)
+    assert sq1 != sq2, "np.sqrt(-1) and np.emath.sqrt(-1) should not be equal"
 
 
 @task("How to get the dates of yesterday, today and tomorrow? (★☆☆)")
