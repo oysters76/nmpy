@@ -453,7 +453,9 @@ def task36():
 @task("Create a 5x5 matrix with row values ranging from 0 to 4 (★★☆)")
 @task_skipper(skip=False)
 def task37():
-    pass
+    a = np.arange(0,5) 
+    b = np.tile(a, (5,1))
+    print(b)
 
 
 @task("Consider a generator function that generates 10 integers and use it to build an array (★☆☆)")
