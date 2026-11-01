@@ -71,13 +71,16 @@ def task8():
 @task("Create a 3x3 matrix with values ranging from 0 to 8 (★☆☆)")
 @task_skipper(skip=False)
 def task9():
-    pass
+    a = np.arange(0,9).reshape(3,3)
+    print(a)
 
 
 @task("Find indices of non-zero elements from [1,2,0,0,4,0] (★☆☆)")
 @task_skipper(skip=False)
 def task10():
-    pass
+    a = np.array([1,2,0,0,4,0]) 
+    print(np.nonzero(a))
+    print(a[np.nonzero(a)])
 
 
 @task("Create a 3x3 identity matrix (★☆☆)")
