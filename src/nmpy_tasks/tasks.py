@@ -510,9 +510,11 @@ def task39():
 
 @task("Create a random vector of size 10 and sort it (★★☆)")
 @task_skipper(skip=False)
-def task40():
-    pass
-
+def task40():   
+    n = np.round(np.random.uniform(0, 10, (10,)), 2)
+    print(n)
+    n = np.sort(n)
+    print(n)
 
 @task("How to sum a small array faster than np.sum? (★★☆)")
 @task_skipper(skip=False)
