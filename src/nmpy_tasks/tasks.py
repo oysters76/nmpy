@@ -224,8 +224,22 @@ def task21():
 @task("Normalize a 5x5 random matrix (★☆☆)")
 @task_skipper(skip=False)
 def task22():
-    pass
+    # euclidean norm per row L2 
+    m = np.round(np.random.rand(5,5),2) # rounded to two decimal places
+    print(m)
+    print("euclidean norm per row L2")
+    m_norm = m/np.linalg.norm(m, axis=1, keepdims=True) 
+    print(m_norm)
 
+    # min-max norm 
+    print("min-max norm")
+    m_norm = (m-m.min())/(m.max()-m.min()) 
+    print(m_norm)
+
+    #z-score norm 
+    print("z-score norm")
+    m_norm = (m-m.mean())/m.std() 
+    print(m_norm)
 
 @task("Create a custom dtype that describes a color as four unsigned bytes (RGBA) (★☆☆)")
 @task_skipper(skip=False)
