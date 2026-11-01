@@ -92,7 +92,11 @@ def task11():
 @task("Create a 3x3x3 array with random values (★☆☆)")
 @task_skipper(skip=False)
 def task12():
-    pass
+    import secrets 
+    key = secrets.randbits(128) 
+    rng = np.random.default_rng(key) 
+    print(rng.random((3,3,3))) 
+
 
 
 @task("Create a 10x10 array with random values and find the minimum and maximum values (★☆☆)")
