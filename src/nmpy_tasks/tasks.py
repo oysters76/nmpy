@@ -579,7 +579,8 @@ def task42():
 @task("Make an array immutable (read-only) (★★☆)")
 @task_skipper(skip=False)
 def task43():
-    pass
+    a = np.array([1,2,3]) 
+    a.flags.writable = False 
 
 
 @task("Consider a random 10x2 matrix representing cartesian coordinates, convert them to polar coordinates (★★☆)")
