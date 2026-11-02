@@ -586,7 +586,43 @@ def task43():
 @task("Consider a random 10x2 matrix representing cartesian coordinates, convert them to polar coordinates (★★☆)")
 @task_skipper(skip=False)
 def task44():
-    pass
+    """
+    key learnings:
+
+    np.stack intuition — think of it as "where does the new dimension go?"
+      axis=0: works on WHOLE arrays. Pile them on top of each other like sheets.
+        r =     [1, 2, 3]    → stack axis=0 → [[1, 2, 3],   shape (2,3)
+        theta = [4, 5, 6]                      [4, 5, 6]]
+        the new dim answers: "which sheet am I in?" — easy to visualize.
+
+      axis=-1: works at the ELEMENT level. Reach inside each position, grab one
+        value from each array, and staple them into a pair.
+        r =     [1, 2, 3]    → stack axis=-1 → [[1, 4],   shape (3,2)
+        theta = [4, 5, 6]                       [2, 5],
+                                                 [3, 6]]
+        the new dim answers: "which value at this position?" — harder because
+        you have to think inside-out, not top-down.
+
+      why axis=-1 is confusing: axis=0 is a big visible operation on whole arrays.
+        axis=-1 is a tiny invisible operation repeated at every element.
+        your brain thinks big-to-small, but axis=-1 forces small-to-big.
+
+      negative indexing: works like Python lists. -1 = last, -2 = second last, etc.
+        for 1D arrays only axis=0 and axis=-1 exist. middle axes only matter in 3D+.
+
+    - p[..., 0] uses ellipsis (...) to select the first element along the last axis,
+      regardless of how many leading dimensions exist. For (10,2): p[:, 0]. For (5,10,2): p[:, :, 0].
+    - vectorization: instead of looping row-by-row with a scalar function,
+      operate on entire columns at once (x = Z[:, 0], y = Z[:, 1]) — NumPy runs the
+      loop in C, which is orders of magnitude faster on large arrays.
+    - np.hypot(x, y): sqrt(x² + y²), avoids overflow for large values
+    - np.arctan2(y, x): angle in radians, handles all quadrants (unlike arctan)
+    """
+    Z = np.random.random((10, 2))
+    x, y = Z[:, 0], Z[:, 1]
+    r = np.hypot(x, y)
+    theta = np.arctan2(y, x)
+    print(np.stack((r, theta), axis=-1))
 
 
 @task("Create random vector of size 10 and replace the maximum value by 0 (★★☆)")
