@@ -628,7 +628,10 @@ def task44():
 @task("Create random vector of size 10 and replace the maximum value by 0 (★★☆)")
 @task_skipper(skip=False)
 def task45():
-    pass
+    n = np.random.randint(0,101, (10,))
+    print(n)
+    n[np.argmax(n)] = 0 
+    print(n)
 
 
 @task("Create a structured array with x and y coordinates covering the [0,1]x[0,1] area (★★☆)")
