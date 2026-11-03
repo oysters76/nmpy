@@ -727,19 +727,58 @@ def task47():
 @task("Print the minimum and maximum representable values for each numpy scalar type (★★☆)")
 @task_skipper(skip=False)
 def task48():
-    pass
+    """
+    key learnings:
+    - np.iinfo(dtype): min/max for integer types (int8, int16, int32, int64)
+    - np.finfo(dtype): min/max for float types (float16, float32, float64)
+    - int8 range: -128 to 127 (2^8 = 256 values, half negative)
+    - float64 is Python's default float; float32 is what GPUs/JAX typically use
+    """
+    for dtype in [np.int8, np.int16, np.int32, np.int64]:
+        info = np.iinfo(dtype)
+        print(f"{dtype.__name__}: min={info.min}, max={info.max}")
+    for dtype in [np.float16, np.float32, np.float64]:
+        info = np.finfo(dtype)
+        print(f"{dtype.__name__}: min={info.min}, max={info.max}")
 
 
 @task("How to print all the values of an array? (★★☆)")
 @task_skipper(skip=False)
 def task49():
-    pass
+    """
+    key learnings:
+    - np.set_printoptions(threshold=np.inf): print all elements, no truncation
+    - set_printoptions is GLOBAL — stays changed for all future prints, so reset after
+    - default threshold is 1000 — arrays larger than that show ... in the middle
+    """
+    n = np.arange(0,5000)
+    np.set_printoptions(threshold=np.inf) 
+    print(n)
+    np.set_printoptions(threshold=1000) 
+    print(n)
 
 
 @task("How to find the closest value (to a given scalar) in a vector? (★★☆)")
 @task_skipper(skip=False)
 def task50():
-    pass
+    """
+    key learnings:
+    - "find closest" pattern: np.abs(array - scalar) → np.argmin → index back
+      1. subtract: n - scalar (broadcasting, no need to make a same-shape array)
+      2. absolute: np.abs(...) so negative differences don't mislead
+      3. find index: np.argmin(diff) gives the position of the smallest distance
+      4. retrieve: n[index] gives the actual closest value
+    - np.argmin / np.argmax return the INDEX, not the value — use it to index back
+    - this pattern (compute distances → argmin) is everywhere in ML:
+      nearest neighbor, closest centroid in k-means, etc.
+    """
+    scalar = 6
+    n = np.arange(0,10) 
+    diff = np.abs(n - scalar) 
+    val = n[np.argmin(diff)]  
+    print(val)
+    val = n[np.argmax(diff)] 
+    print(val)
 
 
 @task("Create a structured array representing a position (x,y) and a color (r,g,b) (★★☆)")
