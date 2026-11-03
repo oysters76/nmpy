@@ -637,13 +637,91 @@ def task45():
 @task("Create a structured array with x and y coordinates covering the [0,1]x[0,1] area (★★☆)")
 @task_skipper(skip=False)
 def task46():
-    pass
+    """
+    key learnings:
+
+    np.meshgrid — turns two 1D arrays into a 2D grid of all (x,y) combinations.
+      x = [0, 1, 2], y = [0, 1]
+      X, Y = np.meshgrid(x, y)
+      X = [[0, 1, 2],    Y = [[0, 0, 0],
+           [0, 1, 2]]         [1, 1, 1]]
+      why two separate arrays? so you can do vectorized math on the whole grid:
+        distance = np.sqrt(X**2 + Y**2)  — one op, every point computed.
+      if they were (x,y) pairs you'd have to unpack first.
+
+    structured arrays — arrays where each element has named fields (like a row in a table).
+      common pattern to make one:
+        1. define the dtype:   dt = np.dtype([('name', type), ('name2', type2)])
+        2. allocate zeros:     Z = np.zeros(shape, dtype=dt)
+        3. fill by field name: Z['name'] = values
+      access like: Z['x'] gives you all x values, Z[0] gives you one record.
+      useful for tabular data where you want named columns but still want NumPy speed.
+    """
+    coordinates_dt = np.dtype([('x', np.float64), ('y', np.float64)]) 
+    xs = np.linspace(0,1, 5) 
+    ys = np.linspace(0,1, 5) 
+
+    X,Y = np.meshgrid(xs,ys)
+
+    Z = np.zeros(X.shape, dtype=coordinates_dt) 
+    Z['x'] = X 
+    Z['y'] = Y 
+
+    print(Z)
 
 
 @task("Given two arrays, X and Y, construct the Cauchy matrix C (Cij=1/(xi-yj)) (★★☆)")
 @task_skipper(skip=False)
 def task47():
-    pass
+    """
+    key learnings:
+
+    broadcasting pattern for "every pair" — the core trick:
+      problem: given xs (5,) and ys (5,), compute x[i] - y[j] for ALL i,j pairs.
+      solution: reshape one to a column, the other to a row, then subtract.
+
+      xs.reshape(-1, 1)  → column (5,1):   ys.reshape(1, -1)  → row (1,5):
+        [[a],                                 [[d, e, f, g, h]]
+         [b],
+         [c],               minus
+         [d],
+         [e]]
+
+      NumPy rule: where a dimension is 1, COPY it to match the other side.
+        column (5,1) stretches to (5,5) — each x repeated across every column
+        row (1,5) stretches to (5,5) — each y repeated down every row
+        result[i,j] = x[i] - y[j]  ← every combination, like a times table
+
+      it's the same as a nested for loop, but 100-1000x faster because NumPy
+      runs it in C. JAX forces this style — no Python loops over arrays allowed.
+
+    np.newaxis vs reshape — same thing, different spelling:
+      xs[:, np.newaxis]    ≡  xs.reshape(-1, 1)     → add dim at end (column)
+      ys[np.newaxis, :]    ≡  ys.reshape(1, -1)     → add dim at start (row)
+      newaxis is shorthand; reshape(-1, 1) is more explicit. use whichever reads
+      better — reshape is clearer when broadcasting feels confusing.
+
+    division by zero — two approaches:
+      1. suppress + clean: np.errstate(divide='ignore'), then replace inf/nan after
+      2. epsilon: add 1e-10 to denominator — preferred in ML/JAX because it's
+         differentiable (no conditional logic to break gradients)
+    """
+    # way 1
+    xs = np.linspace(0,1,5) 
+    ys = np.linspace(0,1,5) 
+    X,Y = np.meshgrid(xs,ys, indexing='ij')
+    C = 1/(X-Y) 
+    print(C)
+
+    with np.errstate(divide='ignore', invalid='ignore'):
+        C = 1.0/(xs[:, np.newaxis] - ys[np.newaxis, :])
+    C[~np.isfinite(C)] = 0  # replace inf/nan with 0
+    print(C)
+
+    with np.errstate(divide='ignore', invalid='ignore'):
+        C = 1.0/(xs.reshape(-1,1) - ys.reshape(1,-1)) 
+    C[~np.isfinite(C)] = 0 
+    print(C)
 
 
 @task("Print the minimum and maximum representable values for each numpy scalar type (★★☆)")
